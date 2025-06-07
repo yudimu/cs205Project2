@@ -15,46 +15,42 @@ class KNN_featureselection:
         scaled = (features - means) / stds
         return np.hstack((labels, scaled))
 
-    def euclidean_distance(self, x, y):
-        return np.sqrt(np.sum((x - y) ** 2))
+    #def euclidean_distance(self, x, y):
+    #    return np.sqrt(np.sum((x - y) ** 2))
 
     def nofeature(self):
         labels, counts = np.unique(self.data[:, 0], return_counts=True)
         return np.max(counts) / len(self.data)
 
     def leave_one_out_knn(self, data, feature_indices):
-        accurate = 0
+        X = data[:, feature_indices].astype(np.float32)
+        y = data[:, 0]
         n = len(data)
+        correct = 0
     
         for i in range(n):
-            test_data = data[i]
-            test_features = test_data[feature_indices]
-            test_label = test_data[0]
+            test_x = X[i]
+            test_y = y[i]
     
-            distances = []
+            # Exclude test instance
+            train_x = np.delete(X, i, axis=0)
+            train_y = np.delete(y, i, axis=0)
     
-            for j in range(n):
-                if i == j:
-                    continue
-                train_features = data[j][feature_indices]
-                train_label = data[j][0]
+            # Compute distances in vectorized way
+            distances = np.linalg.norm(train_x - test_x, axis=1)
+            
+            # Get top-k indices
+            k_indices = np.argpartition(distances, self.k)[:self.k]
+            k_labels = train_y[k_indices]
     
-                distance = self.euclidean_distance(test_features, train_features)
-                distances.append((distance, train_label))
+            # Majority vote
+            predicted = Counter(k_labels).most_common(1)[0][0]
     
-            #sort the distances
-            distances.sort(key=lambda x: x[0])
+            if predicted == test_y:
+                correct += 1
     
-            #get top k neighbors
-            k_labels = [label for _, label in distances[:self.k]]
-    
-            #get the class
-            predicted_label = Counter(k_labels).most_common(1)[0][0]
-    
-            if test_label == predicted_label:
-                accurate += 1
-    
-        return accurate / n
+        return correct / n
+
         
     def forward_selection(self):
         total_features = self.data.shape[1] - 1  # exclude label
@@ -149,14 +145,14 @@ class KNN_featureselection:
 large = np.loadtxt('/rhome/ymu015/bigdata/cs205/CS205_large_Data__20.txt')
 
 
-selector = KNN_featureselection(large, k=9) #define selector
+selector = KNN_featureselection(large, k=1) #define selector
 
 import time
 start_forward = time.time()
 forward_features, forward_acc, forward_hist = selector.forward_selection() 
 end_forward = time.time()
 print(f"Forward selection took {end_forward - start_forward:.2f} seconds.")
-with open('/rhome/ymu015/bigdata/cs205/forward_history_k9.txt', 'w') as f:
+with open('/rhome/ymu015/bigdata/cs205/forward_history_k1.txt', 'w') as f:
     for item in forward_hist:
         f.write(f"{item}\n")
         
@@ -165,7 +161,7 @@ backward_features, backward_acc, backward_hist = selector.backward_selection()
 end_backward = time.time()
 print(f"Backward selection took {end_backward - start_backward:.2f} seconds.")
 
-with open('/rhome/ymu015/bigdata/cs205/backward_history_k9.txt', 'w') as f:
+with open('/rhome/ymu015/bigdata/cs205/backward_history_k1.txt', 'w') as f:
     for item in backward_hist:
         f.write(f"{item}\n")
 
