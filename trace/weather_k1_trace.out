@@ -1,0 +1,63 @@
+
+Forward selection.
+ No features with 0.4250
+ Test features [1], leave-one-out CV accuracy = 0.3220
+ Test features [2], leave-one-out CV accuracy = 0.2884
+ Test features [3], leave-one-out CV accuracy = 0.3282
+ Test features [4], leave-one-out CV accuracy = 0.3849
+ Test features [5], leave-one-out CV accuracy = 0.3920
+ Test features [6], leave-one-out CV accuracy = 0.3533
+Add feature 5 to [5] with accuracy: 0.3920
+ Test features [5, 1], leave-one-out CV accuracy = 0.4130
+ Test features [5, 2], leave-one-out CV accuracy = 0.4101
+ Test features [5, 3], leave-one-out CV accuracy = 0.4139
+ Test features [5, 4], leave-one-out CV accuracy = 0.4212
+ Test features [5, 6], leave-one-out CV accuracy = 0.4158
+Add feature 4 to [5, 4] with accuracy: 0.4212
+ Test features [5, 4, 1], leave-one-out CV accuracy = 0.4161
+ Test features [5, 4, 2], leave-one-out CV accuracy = 0.4200
+ Test features [5, 4, 3], leave-one-out CV accuracy = 0.4164
+ Test features [5, 4, 6], leave-one-out CV accuracy = 0.4212
+Add feature 6 to [5, 4, 6] with accuracy: 0.4212
+ Test features [5, 4, 6, 1], leave-one-out CV accuracy = 0.4133
+ Test features [5, 4, 6, 2], leave-one-out CV accuracy = 0.4261
+ Test features [5, 4, 6, 3], leave-one-out CV accuracy = 0.4172
+Add feature 2 to [5, 4, 6, 2] with accuracy: 0.4261
+ Test features [5, 4, 6, 2, 1], leave-one-out CV accuracy = 0.4157
+ Test features [5, 4, 6, 2, 3], leave-one-out CV accuracy = 0.4200
+Add feature 3 to [5, 4, 6, 2, 3] with accuracy: 0.4200
+ Test features [5, 4, 6, 2, 3, 1], leave-one-out CV accuracy = 0.4245
+Add feature 1 to [5, 4, 6, 2, 3, 1] with accuracy: 0.4245
+ Best feature subset: [5, 4, 6, 2] with accuracy: 0.4261
+Forward selection took 52.62 seconds.
+
+Backward elimination.
+ Initial full feature set [1, 2, 3, 4, 5, 6], leave-one-out accuracy = 0.4245
+ Test removing 1 from [2, 3, 4, 5, 6], leave-one-out CV accuracy = 0.4200
+ Test removing 2 from [1, 3, 4, 5, 6], leave-one-out CV accuracy = 0.4148
+ Test removing 3 from [1, 2, 4, 5, 6], leave-one-out CV accuracy = 0.4157
+ Test removing 4 from [1, 2, 3, 5, 6], leave-one-out CV accuracy = 0.4184
+ Test removing 5 from [1, 2, 3, 4, 6], leave-one-out CV accuracy = 0.3733
+ Test removing 6 from [1, 2, 3, 4, 5], leave-one-out CV accuracy = 0.4149
+Remove feature 1 from [2, 3, 4, 5, 6] with accuracy: 0.4200
+ Test removing 2 from [3, 4, 5, 6], leave-one-out CV accuracy = 0.4172
+ Test removing 3 from [2, 4, 5, 6], leave-one-out CV accuracy = 0.4261
+ Test removing 4 from [2, 3, 5, 6], leave-one-out CV accuracy = 0.4218
+ Test removing 5 from [2, 3, 4, 6], leave-one-out CV accuracy = 0.3817
+ Test removing 6 from [2, 3, 4, 5], leave-one-out CV accuracy = 0.4164
+Remove feature 3 from [2, 4, 5, 6] with accuracy: 0.4261
+ Test removing 2 from [4, 5, 6], leave-one-out CV accuracy = 0.4212
+ Test removing 4 from [2, 5, 6], leave-one-out CV accuracy = 0.4208
+ Test removing 5 from [2, 4, 6], leave-one-out CV accuracy = 0.3882
+ Test removing 6 from [2, 4, 5], leave-one-out CV accuracy = 0.4200
+Remove feature 2 from [4, 5, 6] with accuracy: 0.4212
+ Test removing 4 from [5, 6], leave-one-out CV accuracy = 0.4158
+ Test removing 5 from [4, 6], leave-one-out CV accuracy = 0.3825
+ Test removing 6 from [4, 5], leave-one-out CV accuracy = 0.4212
+Remove feature 6 from [4, 5] with accuracy: 0.4212
+ Test removing 4 from [5], leave-one-out CV accuracy = 0.3920
+ Test removing 5 from [4], leave-one-out CV accuracy = 0.3849
+Remove feature 4 from [5] with accuracy: 0.3920
+ No features with accuracy: 0.4250
+Best feature subset: [2, 4, 5, 6] with accuracy: 0.4261
+Backward selection took 58.97 seconds.
